@@ -1,0 +1,12 @@
+spring:
+  datasource:
+    base:
+      type: com.alibaba.druid.pool.DruidDataSource
+      url: jdbc:p6spy:mysql://39.106.166.135:3306/zuoye?allowMultiQueries=true&useUnicode=true&characterEncoding=UTF-8&useSSL=true&autoReconnect=true&socketTimeout=300000
+      driverClassName: com.mysql.jdbc.Driver
+      username: root
+      password: www1357@#Abcd
+      druid:
+        initial-size: 3
+        max-active: 30
+        validation-query: select 1 from dual
