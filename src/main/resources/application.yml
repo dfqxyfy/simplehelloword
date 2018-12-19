@@ -21,6 +21,6 @@ spring:
 mybatis:
   base:
     config-location: classpath:mybatis-config.xml
-    mapper-locations: classpath:mapper/roi_manager/*.xml
+    mapper-locations: classpath:mapper/*.xml
     type-aliases-package: cn.ccs.demo
 

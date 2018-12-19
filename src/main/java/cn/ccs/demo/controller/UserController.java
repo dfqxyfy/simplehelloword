@@ -18,9 +18,9 @@ public class UserController {
     UserService userService;
 
     @RequestMapping("/login")
-    public String login(String userName){
+    public String login(String userName,String password){
         Map map = new HashMap();
-        User user = userService.find(userName);
+        User user = userService.find(userName,password);
         if(user != null){
             user.setUserPassword("");
             map.put("user",user);

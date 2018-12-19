@@ -11,7 +11,7 @@ public class UserService {
     @Autowired
     UserMapper userMapper;
 
-    public User find(String userName){
+    public User find(String userName,String password){
         User byUserName = userMapper.findByUserName(userName);
 
         return byUserName;
