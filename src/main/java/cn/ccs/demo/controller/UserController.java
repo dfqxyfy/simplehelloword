@@ -1,12 +1,13 @@
 package cn.ccs.demo.controller;
 
-import cn.ccs.demo.entity.User;
-import cn.ccs.demo.service.UserService;
+import cn.ccs.demo.util.ZipUtil;
 import com.alibaba.fastjson.JSONObject;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.*;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -14,19 +15,60 @@ import java.util.Map;
 @RestController
 public class UserController {
 
-    @Autowired
-    UserService userService;
 
-    @RequestMapping("/login")
-    public String login(String userName,String password){
+    @RequestMapping("/upload")
+    public String login(@RequestParam("fileName") MultipartFile file){
         Map map = new HashMap();
-        User user = userService.find(userName,password);
-        if(user != null){
-            user.setUserPassword("");
-            map.put("user",user);
+        String name = file.getOriginalFilename();
+        String dirName = file.getOriginalFilename().substring(0,file.getOriginalFilename().indexOf("."));
+        map.put("msg","success");
+        if(!name.endsWith("zip")){
+            map.put("msg","请输入zip文件");
+            return JSONObject.toJSONString(map);
+        }
+        try {
+            InputStream inputStream = file.getInputStream();
+            String absFilePath = System.getProperty("user.home")+"/temp/"+file.getOriginalFilename();
+            String unzipFilePath = System.getProperty("user.home")+"/temp/"+dirName;
+            File fileTemp = new File(absFilePath);
+            if(fileTemp.exists()){
+                fileTemp.delete();
+            }
+            fileTemp.createNewFile();
+            OutputStream outputStream = new FileOutputStream(fileTemp);
+            int ch;
+            while((ch=inputStream.read())!= -1){
+                outputStream.write(ch);
+            }
+            inputStream.close();
+            outputStream.close();
+            ZipUtil.unZip(fileTemp.getAbsolutePath());
 
+            String s = moveFile(unzipFilePath, dirName);
+
+            map.put("copyMsg",s);
+
+        } catch (IOException e) {
+            map.put("msg","出现异常:"+e.getMessage());
+            e.printStackTrace();
         }
 
         return JSONObject.toJSONString(map);
+    }
+
+    private String moveFile(String unzipFilePath,String dirName){
+        try {
+            //String basDir = "/sunlands/temp/";
+            //String basDir = "/sunlands/temp/";
+            String basDir = "/usr/share/nginx/ad/";
+            String command = "mv -f " + unzipFilePath+"/"+dirName + " " +basDir + dirName;
+            //String command = "mv -f " + unzipFilePath + " /usr/share/nginx/ad/" + dirName;
+            System.out.println("exe command: "+command);
+            Runtime.getRuntime().exec(command);
+            return "执行成功";
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return "执行失败";
     }
 }
