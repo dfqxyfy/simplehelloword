@@ -1,5 +1,6 @@
 package cn.ccs.demo.controller;
 
+import cn.ccs.demo.util.DeleteFileUtil;
 import cn.ccs.demo.util.ZipUtil;
 import com.alibaba.fastjson.JSONObject;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -32,7 +33,7 @@ public class UserController {
             String unzipFilePath = System.getProperty("user.home")+"/temp/"+dirName;
             File fileTemp = new File(absFilePath);
             if(fileTemp.exists()){
-                fileTemp.delete();
+                DeleteFileUtil.delete(fileTemp.getAbsolutePath());
             }
             fileTemp.createNewFile();
             OutputStream outputStream = new FileOutputStream(fileTemp);
@@ -42,6 +43,11 @@ public class UserController {
             }
             inputStream.close();
             outputStream.close();
+
+            File unzipFile = new File(unzipFilePath);
+            if(unzipFile.exists()) {
+                DeleteFileUtil.delete(unzipFile.getAbsolutePath());
+            }
             ZipUtil.unZip(fileTemp.getAbsolutePath());
 
             String s = moveFile(unzipFilePath, dirName);
@@ -59,9 +65,14 @@ public class UserController {
     private String moveFile(String unzipFilePath,String dirName){
         try {
             //String basDir = "/sunlands/temp/";
-            //String basDir = "/sunlands/temp/";
-            String basDir = "/usr/share/nginx/ad/";
-            String command = "mv -f " + unzipFilePath+"/"+dirName + " " +basDir + dirName;
+            String basDir = "/sunlands/temp/";
+            //String basDir = "/usr/share/nginx/ad/";
+            File cpFile = new File(basDir+dirName);
+            if(cpFile.exists()) {
+                DeleteFileUtil.delete(cpFile.getAbsolutePath());
+            }
+
+            String command = "mv -f " + unzipFilePath+"/"+dirName + " " +basDir;
             //String command = "mv -f " + unzipFilePath + " /usr/share/nginx/ad/" + dirName;
             System.out.println("exe command: "+command);
             Runtime.getRuntime().exec(command);

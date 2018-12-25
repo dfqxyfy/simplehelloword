@@ -18,6 +18,7 @@ spring:
       max-request-size: 100MB
       enabled: true
 
+
 mybatis:
   base:
     config-location: classpath:mybatis-config.xml
