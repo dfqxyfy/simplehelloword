@@ -65,8 +65,8 @@ public class UserController {
     private String moveFile(String unzipFilePath,String dirName){
         try {
             //String basDir = "/sunlands/temp/";
-            String basDir = "/sunlands/temp/";
-            //String basDir = "/usr/share/nginx/ad/";
+            //String basDir = "/sunlands/temp/";
+            String basDir = "/usr/share/nginx/ad/";
             File cpFile = new File(basDir+dirName);
             if(cpFile.exists()) {
                 DeleteFileUtil.delete(cpFile.getAbsolutePath());
