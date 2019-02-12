@@ -8,7 +8,6 @@ public class BinanceService {
         String url = "https://api.binance.com/api/v1/ticker/24hr";
         Map<String, String> para = new HashMap<>();
         Map<String, String> head = new HashMap<>();
-        HttpClient.post(para,head,url);
         return null;
     }
 }
