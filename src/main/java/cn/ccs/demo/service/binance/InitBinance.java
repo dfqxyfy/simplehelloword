@@ -25,7 +25,7 @@ public class InitBinance {
         Map<String, String> para = new HashMap<>();
         Map<String, String> head = new HashMap<>();
         head.put("X-MBX-APIKEY","SYsvw5KTwlEAT7B90slLvnaojKxMpwkXeNxSzNH4APEzUlE2J2LmV6WIRdNXCBIG");
-        url = "https://www.google.com";
+        //url = "https://coinmarketcap.com/";
         String post = HttpClient.post(para, head, url);
 
         List<BinanceEntity> binanceEntities = JSONObject.parseArray(post, BinanceEntity.class);
