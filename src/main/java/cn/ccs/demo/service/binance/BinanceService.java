@@ -1,7 +1,5 @@
 package cn.ccs.demo.service.binance;
 
-import cn.ccs.demo.util.HttpClient;
-
 import java.util.HashMap;
 import java.util.Map;
 
