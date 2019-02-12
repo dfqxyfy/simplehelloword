@@ -40,4 +40,18 @@
             <artifactId>mongo-java-driver</artifactId>
         </dependency>
     </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <classifier></classifier>
+                    <outputDirectory>${basedir}/target/</outputDirectory>
+                    <mainClass>cn.ccs.demo.WebAppliction</mainClass>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 </project>
