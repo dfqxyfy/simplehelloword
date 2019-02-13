@@ -36,7 +36,7 @@ function req(page,limit){
     da.page=page;
     da.limit=limit;
     $.ajax({
-        type: 'POST',
+        type: 'GET',
         url: "/coin/24hr",
         dataType: "json",
         data: da,

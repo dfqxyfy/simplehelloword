@@ -36,9 +36,9 @@ public class InitBinance {
     @Scheduled(cron="0 0/3 * * * *")
     public void get(){
         System.out.println(System.currentTimeMillis()+" run...");
-        if(true){
-            return;
-        }
+//        if(true){
+//            return;
+//        }
         String url = "https://api.binance.com/api/v1/ticker/24hr";
         Map<String, String> para = new HashMap<>();
         Map<String, String> head = new HashMap<>();
@@ -66,7 +66,7 @@ public class InitBinance {
             Update update = new BasicUpdate(JSONObject.toJSONString(entity));
             mongoTemplate.upsert(query,update,BinanceEntity.class);
         });
-        mongoTemplate.insert(binanceEntities,BinanceEntity.class);
+        //mongoTemplate.insert(binanceEntities,BinanceEntity.class);
     }
     //@PostConstruct
 
