@@ -23,7 +23,7 @@ public class InitBinance {
     @Autowired
     private MongoTemplate mongoTemplate;
 
-    @PostConstruct
+    //@PostConstruct
     //@Scheduled(cron="0 0/5 * * * *");
 
 
