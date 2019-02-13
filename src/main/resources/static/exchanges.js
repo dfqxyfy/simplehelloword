@@ -11,7 +11,7 @@ $(function() {// 初始化内容
                 $("#initTable").html(content);
             }
         },
-        //dataType: "";
+        dataType: "json"
     });
 });
 
