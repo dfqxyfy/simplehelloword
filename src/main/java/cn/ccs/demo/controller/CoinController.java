@@ -16,8 +16,8 @@ public class CoinController extends BaseController{
     private BinanceService binanceService;
 
     @RequestMapping("/24hr")
-    public Object get24hr(String exchange){
-        List<BinanceEntity> hr = binanceService.find24hr(exchange);
+    public Object get24hr(String exchange,Integer page,Integer limit){
+        List<BinanceEntity> hr = binanceService.find24hr(exchange,page,limit);
         return success(hr);
     }
 }

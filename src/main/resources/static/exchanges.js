@@ -1,18 +1,10 @@
+var page =1;
+var limit=5;
+var basContent;
 $(function() {// 初始化内容
     //alert("aaaa");
-    $.ajax({
-        type: 'POST',
-        url: "/coin/24hr",
-        //data: data,
-        success: function (data) {
-            let innerData = data.data;
-            for(let i=0;i<innerData.length;i++){
-                var content=$("#initTable").html()+createTr(i,innerData[i]);
-                $("#initTable").html(content);
-            }
-        },
-        dataType: "json"
-    });
+    basContent=$("#initTable").html();
+    req(page,limit);
 });
 
 function createTr(num,obj){
@@ -25,4 +17,36 @@ function createTr(num,obj){
     line+="<td>"+obj.count+"</td>"
     line+="</tr>";
     return line;
+}
+
+function prePage(){
+    page--;
+    if(page<=0){
+        page=1;
+    }
+    req(page,limit);
+}
+function nextPage() {
+    page++;
+    req(page,limit);
+}
+
+function req(page,limit){
+    var da={};
+    da.page=page;
+    da.limit=limit;
+    $.ajax({
+        type: 'POST',
+        url: "/coin/24hr",
+        dataType: "json",
+        data: da,
+        success: function (data) {
+            $("#initTable").html(basContent);
+            let innerData = data.data;
+            for(let i=0;i<innerData.length;i++){
+                var content=$("#initTable").html()+createTr(i,innerData[i]);
+                $("#initTable").html(content);
+            }
+        }
+    });
 }

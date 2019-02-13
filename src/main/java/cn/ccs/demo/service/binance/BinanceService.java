@@ -15,9 +15,10 @@ public class BinanceService {
     @Autowired
     private MongoTemplate mongoTemplate;
 
-    public List<BinanceEntity> find24hr(String exchange){
+    public List<BinanceEntity> find24hr(String exchange,Integer page,Integer limit){
         Query query = new Query();
-        query.limit(30);
+        query.limit(limit);
+        query.skip((page-1)*limit);
         return mongoTemplate.find(query,BinanceEntity.class);
     }
 }
