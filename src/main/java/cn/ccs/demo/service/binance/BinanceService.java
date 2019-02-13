@@ -17,6 +17,7 @@ public class BinanceService {
 
     public List<BinanceEntity> find24hr(String exchange){
         Query query = new Query();
+        query.limit(20);
         return mongoTemplate.find(query,BinanceEntity.class);
     }
 }
