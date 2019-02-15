@@ -1,7 +1,8 @@
 spring:
     data:
       mongodb:
+        uri: mongodb://172.16.117.16:27017/test
         #username: dev
-        host: 172.16.117.16
-        port: 27017
-        database: test
+        #host: 172.16.117.16
+        #port: 27017
+        #database: test
