@@ -54,7 +54,7 @@ public class InitTradeDetail {
         Map<String, String> paraMap = new HashMap<>();
         paraMap.put("symbol",symbol);
         paraMap.put("fromId",fromId);
-        String s = BinanceHttpClient.getRes("https://api.binance.com/api/v1/historicalTrades", paraMap);
+        String s = BinanceHttpClient.get("https://api.binance.com/api/v1/historicalTrades", paraMap);
         List<BinanceHistoricalTrades> binanceHistoricalTrades = JSONArray.parseArray(s, BinanceHistoricalTrades.class);
 
         binanceHistoricalTrades.forEach(entity->{

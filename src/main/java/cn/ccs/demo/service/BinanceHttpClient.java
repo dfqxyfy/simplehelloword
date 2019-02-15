@@ -15,15 +15,19 @@ import java.util.Map;
 
 public class BinanceHttpClient {
 
-    public static String get(String url,Map<String, List<String>> otherMap){
+    public static String get(String url,Map<String, String> otherMap){
         RestTemplate restTemplate = new RestTemplate();
         if(otherMap == null){
             otherMap = new HashMap<>(1);
         }
-        MultiValueMap<String, String> params = new LinkedMultiValueMap<>(otherMap);
-
         HttpHeaders headers = new HttpHeaders();
         headers.set("X-MBX-APIKEY","SYsvw5KTwlEAT7B90slLvnaojKxMpwkXeNxSzNH4APEzUlE2J2LmV6WIRdNXCBIG");
+
+        MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
+
+        otherMap.forEach((k,v)->{
+            params.add(k,v);
+        });
 
         HttpEntity<MultiValueMap<String, String>> requestEntity = new HttpEntity<MultiValueMap<String, String>>(params, headers);
         ResponseEntity<String> exchange = restTemplate.exchange(url, HttpMethod.GET, requestEntity, String.class);
@@ -32,13 +36,12 @@ public class BinanceHttpClient {
         return body;
     }
 
-    public static String getRes(String url,Map<String, String> map){
-        Map<String, List<String>> otherMap = new HashMap<>();
-        map.keySet().forEach(s->{
-            List<String> list = new ArrayList<>();
-            list.add(map.get(s));
-            otherMap.put(s,list);
-        });
-        return get(url,otherMap);
+
+    public static void main(String[] args) {
+        Map<String, String> paraMap = new HashMap<>();
+        paraMap.put("symbol","ETHBTC");
+        paraMap.put("fromId","106884030");
+        String s = BinanceHttpClient.get("https://api.binance.com/api/v1/historicalTrades?symbol=ETHBTC&fromId=106884030", paraMap);
+        System.out.println(s);
     }
 }
