@@ -41,7 +41,7 @@ public class BinanceHttpClient {
         Map<String, String> paraMap = new HashMap<>();
         paraMap.put("symbol","ETHBTC");
         paraMap.put("fromId","106884030");
-        String s = BinanceHttpClient.get("https://api.binance.com/api/v1/historicalTrades?symbol=ETHBTC&fromId=106884030", paraMap);
+        String s = BinanceHttpClient.get("https://api.binance.com/api/v1/historicalTrades", paraMap);
         System.out.println(s);
     }
 }
