@@ -36,7 +36,7 @@ public class InitTradeDetail {
     public void initDetail(){
         int page = 1;
         int limit =10;
-        int count = 0;
+        int count ;
         do {
             List<BinanceEntity> binanceList = binanceService.find24hr("binance", page, limit);
             binanceList.forEach(binanceEntity -> {
