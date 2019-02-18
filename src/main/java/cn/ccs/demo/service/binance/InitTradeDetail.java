@@ -3,6 +3,7 @@ package cn.ccs.demo.service.binance;
 import cn.ccs.demo.service.BinanceHttpClient;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.MongoTemplate;
@@ -16,8 +17,10 @@ import javax.annotation.PostConstruct;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
 
 @Component
+@Slf4j
 public class InitTradeDetail {
 
     @Autowired
@@ -34,9 +37,14 @@ public class InitTradeDetail {
         do {
             List<BinanceEntity> binanceList = binanceService.find24hr("binance", page, limit);
             binanceList.forEach(binanceEntity -> {
-                getByFormIdAnd(binanceEntity.getSymbol());
+                try {
+                    getByFormIdAnd(binanceEntity.getSymbol());
+                }catch (Exception e){
+                    log.error("详细信息 {} 失败",binanceEntity.getSymbol(),e);
+                }
             });
             count = binanceList.size();
+            page++;
         }while(count>0);
     }
     private void getByFormIdAnd(String symbol){
@@ -54,7 +62,11 @@ public class InitTradeDetail {
         Map<String, String> paraMap = new HashMap<>();
         //paraMap.put("symbol",symbol);
         //paraMap.put("fromId",fromId);
-        String s = BinanceHttpClient.get("https://api.binance.com/api/v1/historicalTrades?symbol="+symbol+"&fromId="+fromId, paraMap);
+        String uri = "https://api.binance.com/api/v1/historicalTrades?symbol="+symbol;
+        if(fromId!=null){
+            uri += "&fromId="+fromId;
+        }
+        String s = BinanceHttpClient.get(uri, paraMap);
         List<BinanceHistoricalTrades> binanceHistoricalTrades = JSONArray.parseArray(s, BinanceHistoricalTrades.class);
 
         binanceHistoricalTrades.forEach(entity->{
