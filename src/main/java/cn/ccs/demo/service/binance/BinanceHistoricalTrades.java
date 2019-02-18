@@ -11,6 +11,8 @@ public class BinanceHistoricalTrades {
     private String isBuyerMaker;// true,
     private String isBestMatch;// true
 
+    private String symbol;
+
     public String getId() {
         return id;
     }
@@ -57,5 +59,13 @@ public class BinanceHistoricalTrades {
 
     public void setIsBestMatch(String isBestMatch) {
         this.isBestMatch = isBestMatch;
+    }
+
+    public String getSymbol() {
+        return symbol;
+    }
+
+    public void setSymbol(String symbol) {
+        this.symbol = symbol;
     }
 }

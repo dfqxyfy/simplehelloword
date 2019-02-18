@@ -74,6 +74,7 @@ public class InitTradeDetail {
         List<BinanceHistoricalTrades> binanceHistoricalTrades = JSONArray.parseArray(s, BinanceHistoricalTrades.class);
 
         binanceHistoricalTrades.forEach(entity->{
+            entity.setSymbol(symbol);
             Query query = new Query();
             query.addCriteria(Criteria.where("id").is(entity.getId()));
             Update update = new BasicUpdate(JSONObject.toJSONString(entity));
