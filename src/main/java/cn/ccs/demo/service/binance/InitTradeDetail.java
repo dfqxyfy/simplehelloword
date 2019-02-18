@@ -31,8 +31,8 @@ public class InitTradeDetail {
     @Autowired
     private BinanceService binanceService;
 
-    @PostConstruct
-    @Scheduled(cron="0 0/3 * * * *")
+    //@PostConstruct
+    @Scheduled(cron="0 0/11 * * * *")
     public void initDetail(){
         int page = 1;
         int limit =10;
