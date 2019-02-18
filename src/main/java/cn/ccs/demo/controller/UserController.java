@@ -29,4 +29,12 @@ public class UserController {
 
         return JSONObject.toJSONString(map);
     }
+
+    @RequestMapping("/user")
+    public String login(User user){
+        Map map = new HashMap();
+        System.out.println(user.getUserId());
+
+        return JSONObject.toJSONString(map);
+    }
 }
