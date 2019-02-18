@@ -11,16 +11,18 @@ import org.springframework.data.mongodb.core.query.BasicUpdate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
+import org.springframework.scheduling.annotation.EnableScheduling;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.logging.Level;
 
 @Component
 @Slf4j
+@EnableScheduling
 public class InitTradeDetail {
 
     @Autowired
@@ -30,6 +32,7 @@ public class InitTradeDetail {
     private BinanceService binanceService;
 
     @PostConstruct
+    @Scheduled(cron="0 0/3 * * * *")
     public void initDetail(){
         int page = 1;
         int limit =10;
@@ -39,6 +42,7 @@ public class InitTradeDetail {
             binanceList.forEach(binanceEntity -> {
                 try {
                     getByFormIdAnd(binanceEntity.getSymbol());
+                    log.info("数据 {} 成功",binanceEntity.getSymbol());
                 }catch (Exception e){
                     log.error("详细信息 {} 失败",binanceEntity.getSymbol(),e);
                 }

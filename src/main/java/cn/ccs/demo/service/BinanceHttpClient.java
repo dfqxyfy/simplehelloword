@@ -31,7 +31,7 @@ public class BinanceHttpClient {
 
         HttpEntity<MultiValueMap<String, String>> requestEntity = new HttpEntity<MultiValueMap<String, String>>(params, headers);
         ResponseEntity<String> exchange = restTemplate.exchange(url, HttpMethod.GET, requestEntity, String.class);
-        System.out.println(exchange.getStatusCode());
+        //System.out.println(exchange.getStatusCode());
         String body = exchange.getBody();
         return body;
     }
