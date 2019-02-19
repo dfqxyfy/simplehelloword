@@ -12,11 +12,10 @@ spring:
   jackson:
     time-zone: GMT+8
     date-format: yyyy-MM-dd HH:mm:ss
-  http:
+  servlet:
     multipart:
       max-file-size: 100MB
       max-request-size: 100MB
-      enabled: true
       location: ${user.dir}/multipartUpload/
 
 
